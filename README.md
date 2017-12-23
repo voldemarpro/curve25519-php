@@ -1,16 +1,16 @@
 # curve25519 php
 
-Curve25519 library with Ed25519 signatures extension for PHP. This is used in [Chat API](https://github.com/WHAnonymous/Chat-API)
+Curve25519 library with Ed25519 signatures extension for PHP.
 
 ```php
-$secureRandom = self::getSecureRandom();
-$private = curve25519_private($secureRandom);
-$public  = curve25519_public($private);
-$keyPair = new ECKeyPair(new DjbECPublicKey($public),new DjbECPrivateKey($private));
-        
-$agreement = curve25519_shared( $keyPair->getPrivateKey(),$keyPair->getPublicKey());
-$signature = curve25519_sign(getSecureRandom(64), $signingKey->getPrivateKey(), $message);
-$verified  = curve25519_verify($signingKey->getPublicKey(), $message, $signature) == 0;
+$secureRandom = \openssl_random_pseudo_bytes(64);
+$privateKey = curve25519_private($secureRandom);
+$publicKey  = curve25519_public($private);
+
+$secureRandom = \openssl_random_pseudo_bytes(64);
+$agreement = curve25519_shared($privateKey, $publicKey);
+$signature = curve25519_sign($secureRandom, $privateKey, $message);
+$signatureValid  = curve25519_verify($publicKey, $message, $signature) == 0;
 ```
 
 # Installation
